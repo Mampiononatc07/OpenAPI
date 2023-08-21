@@ -15,13 +15,53 @@ tags:
   - name: Status
     description: Everything about your Status
 paths:
-  /Status:
+  /Student:
+    put:
+      tags:
+        - Students
+      summary: Update an existing status
+      description: Update an existing status by Id
+      operationId: updateStudent
+      requestBody:
+        description: Update an existent status 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Status not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:student
+            - read:student
+  /Students/getStatus: 
     get:
       tags:
-        - Status
+        - Students
       summary: Get status
-      description: Get status description
-      operationId: Status
+      description: Get student description
+      operationId: Students
       parameters:
         - name: status
           in: query
@@ -30,11 +70,6 @@ paths:
           explode: true
           schema:
             type: string
-            default: available
-            enum:
-              - available
-              - pending
-              - sold
       responses:
         '200':
           description: successful operation
@@ -43,27 +78,27 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Status'          
+                  $ref: '#/components/schemas/Student'          
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Status'
+                  $ref: '#/components/schemas/Student'
         '400':
           description: Invalid status value
       security:
         - petstore_auth:
-            - write:pets
-            - read:pets
-  /Status/uploadStatus:
+            - write:sudent
+            - read:student
+  /Students:
     post:
       tags:
-        - Status
-      summary: uploads an status
+        - Students
+      summary: add new student
       description: ''
       operationId: uploadFile
       parameters:
-        - name: statusId
+        - name: studentId
           in: path
           description: ID of status to update
           required: true
@@ -85,11 +120,174 @@ paths:
                 $ref: '#/components/schemas/ApiResponse'
       security:
         - petstore_auth:
-            - write:pets
-            - read:pets
+            - write:student
+            - read:student
+  /Student/deleteStatus:
+    delete:
+      tags:
+        - Students
+      summary: Deletes a status
+      description: delete a student
+      operationId: deletePet
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: studentId
+          in: path
+          description: Student id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid student value
+      security:
+        - petstore_auth:
+            - write:student
+            - read:student
+  /Teacher:
+    put:
+      tags:
+        - Teachers
+      summary: Update an existing status
+      description: Update an existing status by last_name our first_name
+      operationId: updateTeacher
+      requestBody:
+        description: Update an existent status 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Status not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:teacher
+            - read:teacher
+  /Teacher/getStatus: 
+    get:
+      tags:
+        - Teachers
+      summary: Get status
+      description: Get Teacher description
+      operationId: Teachers
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered 
+          required: false
+          explode: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+        '400':
+          description: Invalid status value
+      security:
+        - petstore_auth:
+            - write:teacher
+            - read:teacher
+  /Teachers:
+    post:
+      tags:
+        - Teachers
+      summary: add new Teacher
+      description: ''
+      operationId: uploadFile
+      parameters:
+        - name: TeacherId
+          in: path
+          description: ID of status to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      security:
+        - petstore_auth:
+            - write:teacher
+            - read:teacher
+  /Teacher/deleteStatus:
+    delete:
+      tags:
+        - Teachers
+      summary: Deletes a status
+      description: delete a Teacher
+      operationId: deletePet
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: TeacherId
+          in: path
+          description: Student id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid student value
+      security:
+        - petstore_auth:
+            - write:teacher
+            - read:teacher
 components:
   schemas:
-    Status:
+    Student:
       required:
         - id
         - name
@@ -108,7 +306,29 @@ components:
           format: birthDate
           example: 07-12-2000
       xml:
-        name: Status
+        name: Student
+    Teacher:
+      required:
+        - first_name
+        - last_name
+        - course_list
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: RAMAROZAKA
+        last_name:
+          type: string
+          example: Toky
+        course_list:
+          type: string
+          description: course list
+          enum:
+            - course_name
+            - code
+            - duration 
+      xml:
+        name: Teacher
     ApiResponse:
       type: object
       properties:
@@ -122,16 +342,18 @@ components:
       xml:
         name: '##default'
   requestBodies:
-    Status:
+    Student:
       description: Pet object that needs to be added to the store
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Status'
-        application/xml:
+            $ref: '#/components/schemas/Student'
+    Teacher:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
           schema:
-            $ref: '#/components/schemas/Status'
-
+            $ref: '#/components/schemas/Teacher'
   securitySchemes:
     petstore_auth:
       type: oauth2
