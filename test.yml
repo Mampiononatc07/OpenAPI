@@ -327,6 +327,7 @@ components:
             - course_name
             - code
             - duration 
+          example: Algorithme, Programmation, 12 heures
       xml:
         name: Teacher
     ApiResponse:
