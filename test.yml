@@ -322,12 +322,12 @@ components:
           example: Toky
         course_list:
           type: string
-          description: course list
+          description: course list 
+          example: Algorithme, Programmation, 12 heures
           enum:
             - course_name
             - code
-            - duration 
-          example: Algorithme, Programmation, 12 heures
+            - duration
       xml:
         name: Teacher
     ApiResponse:
